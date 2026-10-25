@@ -4,11 +4,11 @@ Wingman is a private chat assistant for a team of about 10 to 50 people. You ins
 
 The chat page is [Open WebUI](https://github.com/open-webui/open-webui). Wingman adds the installer, sign-in, group folders, document tools, backups, and the admin console around it.
 
-This page is the install and operate guide for **1.0.0**. This repository holds only the installer download and this guide. After install, the full docs are on the server under `/opt/wingman/docs/`: `USER.md` (staff), `ADMIN.md` (day-to-day administration), `HANDOFF.md` (hardware notes and directory administrator work), and `requirements-matrix.md` (what is implemented, partial, or missing).
+This page is the install and operate guide for **1.0.1**. 1.0.1 is 1.0.0 with a docs cleanup only; the program is unchanged. This repository holds only the installer download and this guide. After install, the full docs are on the server under `/opt/wingman/docs/`: `USER.md` (staff), `ADMIN.md` (day-to-day administration), `HANDOFF.md` (hardware notes and directory administrator work), and `requirements-matrix.md` (what is implemented, partial, or missing).
 
 ## What you get
 
-These are in the 1.0.0 package. The wizard turns some of them on only when you ask.
+These are in the 1.0.1 package. The wizard turns some of them on only when you ask.
 
 **Chat and sign-in.** People chat in the browser. A password sign-in, including the emergency admin and Active Directory, also asks for a 6-digit authenticator code. Entra sign-in is kept only when Microsoft reports that MFA was used. The default session is a workday of 8 hours (10 or 12 are choices). An idle browser is signed out after 60 minutes (30 or 120 are choices). Every 15 minutes the server re-checks directory groups in the background. If the directory cannot be reached, the last known groups stay for a grace window (default 15 minutes) and that delay is written to the audit log. After the grace window, chat pauses and the person stays signed in.
 
@@ -57,31 +57,31 @@ printf 'WINGMAN_SKIP_FIREWALL=1\n' | sudo tee /etc/wingman/setup.env >/dev/null
 sudo chmod 0600 /etc/wingman/setup.env
 ```
 
-## Install 1.0.0
+## Install 1.0.1
 
-The supported install is the `.deb` on the GitHub Release: [v1.0.0](https://github.com/MontarxDev/wingman-download/releases/tag/v1.0.0). No GitHub login is needed.
+The supported install is the `.deb` on the GitHub Release: [v1.0.1](https://github.com/MontarxDev/wingman-download/releases/tag/v1.0.1). No GitHub login is needed.
 
-Download `wingman_1.0.0_amd64.deb` and `SHA256SUMS` into the same directory:
+Download `wingman_1.0.1_amd64.deb` and `SHA256SUMS` into the same directory:
 
 ```bash
-curl -LO https://github.com/MontarxDev/wingman-download/releases/download/v1.0.0/wingman_1.0.0_amd64.deb
-curl -LO https://github.com/MontarxDev/wingman-download/releases/download/v1.0.0/SHA256SUMS
+curl -LO https://github.com/MontarxDev/wingman-download/releases/download/v1.0.1/wingman_1.0.1_amd64.deb
+curl -LO https://github.com/MontarxDev/wingman-download/releases/download/v1.0.1/SHA256SUMS
 ```
 
 The published checksum is:
 
 ```text
-3e65c405b0733cb48d6c8f89419337762feb15b52ed83a9f3230a3a87650f101  wingman_1.0.0_amd64.deb
+5b6f4278ff0dac43d9580777284c56eb3258cf4f6d0bfa6f9aff742f969355af  wingman_1.0.1_amd64.deb
 ```
 
 Check it, then install. `sha256sum -c` looks for the `.deb` name written in `SHA256SUMS`, in the current directory:
 
 ```bash
 sha256sum -c SHA256SUMS
-sudo apt install ./wingman_1.0.0_amd64.deb
+sudo apt install ./wingman_1.0.1_amd64.deb
 ```
 
-`sha256sum -c` prints `wingman_1.0.0_amd64.deb: OK`. If it does not, stop. Do not install that file.
+`sha256sum -c` prints `wingman_1.0.1_amd64.deb: OK`. If it does not, stop. Do not install that file.
 
 The package does not open a browser. On a new machine it prints the setup URL and a one-time code, which looks like this:
 
@@ -206,10 +206,10 @@ Installing this `.deb` over 1.0.0-rc6 or LocalDesk 0.2.4 keeps Docker volumes, c
 
 ```bash
 sha256sum -c SHA256SUMS
-sudo apt install ./wingman_1.0.0_amd64.deb
+sudo apt install ./wingman_1.0.1_amd64.deb
 ```
 
-A machine that is already configured does not restart the wizard. The live upgrade from LocalDesk 0.2.4 to this 1.0.0 package was not run again on the test machine. See [Testing](#testing).
+A machine that is already configured does not restart the wizard. The live upgrade from LocalDesk 0.2.4 to this 1.0.1 package was not run again on the test machine. See [Testing](#testing).
 
 Pinned components are updated from the admin page **Updates & Components**, or:
 
@@ -257,9 +257,9 @@ When `/etc/wingman/env` exists, purge copies it to `/var/lib/wingman/recovery/en
 
 ## Troubleshooting
 
-**The checksum failed.** `sha256sum -c SHA256SUMS` must be run in the directory that contains `wingman_1.0.0_amd64.deb`. The expected hash is `3e65c405b0733cb48d6c8f89419337762feb15b52ed83a9f3230a3a87650f101`. Download both files again. Do not install a file that does not match.
+**The checksum failed.** `sha256sum -c SHA256SUMS` must be run in the directory that contains `wingman_1.0.1_amd64.deb`. The expected hash is `5b6f4278ff0dac43d9580777284c56eb3258cf4f6d0bfa6f9aff742f969355af`. Download both files again. Do not install a file that does not match.
 
-**The download fails.** Use the links on the [v1.0.0 release page](https://github.com/MontarxDev/wingman-download/releases/tag/v1.0.0). No login is needed.
+**The download fails.** Use the links on the [v1.0.1 release page](https://github.com/MontarxDev/wingman-download/releases/tag/v1.0.1). No login is needed.
 
 **The wizard did not start.** The package prints `The setup wizard did not start.` Read `/var/log/wingman-setup.log`. If the port is taken, setup stops with `That port is already in use` and names the port. Set `WINGMAN_SETUP_PORT` in `/etc/wingman/setup.env` to a free port and run `sudo systemctl restart wingman-setup.service`.
 
@@ -297,13 +297,13 @@ Be exact about what this release has been run on.
 - A fresh install turns office files, meeting notes, and spreadsheet analysis on for each group chosen in the wizard, and leaves mail off. A policy that is already saved is kept.
 - Restoring a backup shows the maintenance page instead of a 502.
 
-1.0.0 is that rc9 program with the version string and the delivery docs set to 1.0.0. No other behavior was changed. The `.deb` hash changed because the version string and the packaged docs changed. It is `3e65c405b0733cb48d6c8f89419337762feb15b52ed83a9f3230a3a87650f101`.
+1.0.0 is that rc9 program with the version string and the delivery docs set to 1.0.0. 1.0.1 is 1.0.0 with a docs cleanup only. No other behavior was changed. The `.deb` hash changed because the version string and the packaged docs changed. The 1.0.1 hash is `5b6f4278ff0dac43d9580777284c56eb3258cf4f6d0bfa6f9aff742f969355af`.
 
 **Not tested.**
 
-- The final 1.0.0 `.deb` was not installed again. rc9 was the tested build.
+- The final 1.0.0 and 1.0.1 `.deb` files were not installed again. rc9 was the tested build.
 - Component update and revert have not been run against a real newer version than the pin recorded on the server. The commands and the admin buttons are implemented and covered by tests that use a recorded digest.
-- An upgrade from LocalDesk 0.2.4 to 1.0.0 was not run again on the test machine. The upgrade path is in the package. That live rerun was not part of this pass.
+- An upgrade from LocalDesk 0.2.4 to 1.0.1 was not run again on the test machine. The upgrade path is in the package. That live rerun was not part of this pass.
 - Other distributions and other hardware were not part of this pass. Ubuntu 24.04 is the supported family. Linux Mint 22.3 on the test machine is the machine that was actually used.
 
 Automated checks are separate from the test machine. For the rc9 commit, the CI checks job passed shellcheck, unit tests, purge and reinstall, browser sign-in, and the sandbox code runner. The artifact upload then failed because Actions storage quota was full. The release files are the download. The local suite at that commit was 277 tests, with 4 skipped. A browser sign-in through Caddy received a model reply. The end-to-end installer job was not used as the proof for this release. That job skips Docling, the code runner, Laya, vLLM, the firewall, the GPU, ClamAV, Uptime Kuma, and the large downloads, and it pins `qwen2.5:0.5b`.
